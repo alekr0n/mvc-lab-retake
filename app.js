@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const carsRoutes = require('./routes/cars');
-app.use('/cars', carsRoutes);
+app.use('/car', carsRoutes);
 
 const homeRoutes = require('./routes/home');
 app.use('/', homeRoutes);

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const cheerio = require('cheerio');
+const path = require('path');
 
 let cars = [];
 let nextId = 1;
@@ -16,7 +17,7 @@ const addCar = (make, model, year, color) => {
     cars.push(newCar);
 };
 
-router.get('/car', (req, res) => {
+router.get('/', (req, res) => {
     const $ = cheerio.load('<div class="car"></div>');
 
     if (cars.length === 0) {
@@ -33,11 +34,11 @@ router.get('/car', (req, res) => {
     res.send($.html());
 });
 
-router.get('/car/add', (req, res) => {
-    res.sendFile('add-car.html', { root: __dirname });
+router.get('/add', (req, res) => { 
+    res.sendFile(path.resolve('views', 'add-car.html'));
 });
 
-router.get('/car/list', (req, res) => {
+router.get('/list', (req, res) => {
     const $ = cheerio.load('<div class="cars"></div>');
 
     if (cars.length === 0) {
@@ -59,7 +60,7 @@ router.get('/car/list', (req, res) => {
     res.send($.html());
 });
 
-router.post('/car/add', (req, res) => {
+router.post('/add', (req, res) => {
     const { make, model, year, color } = req.body;
     addCar(make, model, year, color);
     res.redirect('/car');
